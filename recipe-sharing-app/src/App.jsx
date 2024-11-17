@@ -1,7 +1,7 @@
 import useRecipeStore from './components/recipeStore'
 import RecipeList from './components/RecipeList'
 import AddRecipeForm from './components/RecipeList'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RecipeDetails from './RecipeDetails';
 
 function App() {
@@ -9,13 +9,9 @@ function App() {
 
   return (
     <Router>
-      <Switch>
-        {/* Other routes */}
-        <Route path="/recipe/:id" render={(props) => {
-          const { id } = props.match.params;
-          return <RecipeDetails recipeId={id} />;
-        }} />
-      </Switch>
+      <Routes>
+        <Route path="/recipe/:id" element={<RecipeDetails />} />
+      </Routes>
     </Router>
   )
 }
