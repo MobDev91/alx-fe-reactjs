@@ -1,4 +1,3 @@
-// EditRecipeForm Component
 import React, { useState } from 'react';
 import useRecipeStore from './recipeStore';
 
@@ -7,8 +6,8 @@ const EditRecipeForm = ({ recipe }) => {
   const [description, setDescription] = useState(recipe.description);
   const updateRecipe = useRecipeStore((state) => state.updateRecipe);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     updateRecipe({ ...recipe, title, description });
   };
 
