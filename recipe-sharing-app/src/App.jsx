@@ -1,18 +1,22 @@
 import useRecipeStore from './components/recipeStore'
 import RecipeList from './components/RecipeList'
 import AddRecipeForm from './components/RecipeList'
-import './App.css'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import RecipeDetails from './RecipeDetails';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <RecipeList/>
-        <AddRecipeForm/>
-      </div>
-    </>
+    <Router>
+      <Switch>
+        {/* Other routes */}
+        <Route path="/recipe/:id" render={(props) => {
+          const { id } = props.match.params;
+          return <RecipeDetails recipeId={id} />;
+        }} />
+      </Switch>
+    </Router>
   )
 }
 
