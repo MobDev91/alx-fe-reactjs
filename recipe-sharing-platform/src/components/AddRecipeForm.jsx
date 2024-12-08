@@ -1,34 +1,75 @@
-import React, { useState } from 'react';
-import { useRecipeStore } from '../recipeStore';
+import React from 'react'
+import { useState } from 'react'
 
-const AddRecipeForm = () => {
-  const addRecipe = useRecipeStore((state) => state.addRecipe);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+const AddRecipeForm = ()=> {
+    const[title, setTitle] = useState("");
+    const[ingredients, setIngredients] = useState("");
+    const[steps, setSteps] = useState("");
+    const[errors, setErrors ] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    addRecipe({ id: Date.now(), title, description });
-    setTitle('');
-    setDescription('');
-  };
+    const handleSubmit =(e)=>{
+        e.preventDefault();
+
+    const validate = (title,ingredients, steps) =>{
+    if(!title||ingredients||steps){
+        setErrors("All fields are required");
+        return;
+    }
+
+    if(ingredients.split(" , ").length<2){
+        setErrors("Atleast 2 ingredients are required");
+        return;
+    }
+
+    setErrors("");
+};
+
+    const newRecipe = {
+        title, ingredients: ingredients.split(" , "), steps,
+    };
+
+    console.log("New Recipe: ", newRecipe);
+    alert("Recipe added successfully");
+
+    setTitle("");
+    setIngredients("");
+    setSteps("");
+
+    }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
-      />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description"
-      />
-      <button type="submit">Add Recipe</button>
-    </form>
+    <div className='container bg-white mx-auto p-9'>
+        <div className='bg-white mx-auto shadow-2xl rounded-lg p-6  '>
+        <h1 className='text-lime-700 m-5 md:text-2xl sm:text-xl'>Add Recipe Form</h1>
+        {errors && <p className='text-red-500'>{errors}</p>}
+        <form onSubmit={handleSubmit}>
+            <div>
+            <label className='text-label'>Title</label>
+            <input type="text" value={title} onChange={(e)=>{setTitle(e.target.value)}}
+            className='inputs'
+            />
+            </div>
+            <div>
+            <label className='text-label'>Ingredients</label>
+            <textarea value={ingredients} onChange={(e)=>{setIngredients(e.target.value)}} 
+                className='inputs'
+                />
+            </div>
+            <div>
+            <label className='text-label'>Steps</label>
+            <textarea value={steps} onChange={(e)=>{setSteps(e.target.value)}} 
+                className='inputs'
+                />
+            </div>
+            <div>
+            <button className='bg-lime-600 m-10 hover:bg-lime-700 font-bold'>Add Recipe</button>
+            </div>
+            
+        </form>
+        </div>
+        
+    </div>
   );
 };
 
-export default AddRecipeForm;
+export default AddRecipeForm
